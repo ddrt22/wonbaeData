@@ -219,8 +219,15 @@ public class MainActivity extends AppCompatActivity {
 
         } else if (requestCode == 0 && resultCode == 2) {//대피소 보기 엑티비티에서 삭제버튼을 눌렀을 경우 해당 객체를 삭제
             position = data.getIntExtra("position", -1);
-            mData.remove(position);
-            arraylist.remove(position);
+            mData.clear();//mData 초기화
+            if(subjectPosition == 3) {//전체보기일때
+                arraylist.remove(position);//복사본 리스트 삭제
+            }else{
+                for (int i = 0; i < arraylist.size(); i++) {//리스트를 모두 검사
+                    if (arraylist.get(i).subject == subjectPosition)//현재 주제값과 리스트의 주제값이 같을때
+                        arraylist.remove(i);//리스트삭제
+                }
+            }
         }
 
         else if (requestCode == 0 && resultCode == 3) {//대피소 편집 엑티비티에서 저장을 누를 경우 객체 정보를 갱신
